@@ -1,10 +1,15 @@
-import { Component } from '@angular/core';
-import { RouterOutlet } from "../../../node_modules/@angular/router/types/_router_module-chunk";
+import { ChangeDetectionStrategy, Component, output } from '@angular/core';
 
 @Component({
   selector: 'app-header',
-  imports: [RouterOutlet],
   templateUrl: './header.html',
   styleUrl: './header.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class Header {}
+export class Header {
+  readonly sidebarToggle = output<void>();
+
+  onToggleSidebar(): void {
+    this.sidebarToggle.emit();
+  }
+}
