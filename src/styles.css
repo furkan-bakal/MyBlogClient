@@ -1,1 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
+
+/* Prevent background scroll while an app-popup is open. */
+body.popup-open {
+  overflow: hidden;
+}

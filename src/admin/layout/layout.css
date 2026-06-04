@@ -4,6 +4,15 @@
   padding-top: 56px;
 }
 
+.admin-main {
+  flex: 1;
+  margin-left: 240px;
+  padding: 1.5rem;
+  transition: margin-left 0.25s ease-in-out;
+  min-height: 100%;
+  background-color: #f8f9fa;
+}
+
 .sidebar {
   width: 240px;
   min-height: 100%;
@@ -45,15 +54,6 @@
 
 .sidebar-backdrop.show {
   display: block;
-}
-
-.admin-main {
-  flex: 1;
-  margin-left: 240px;
-  padding: 1.5rem;
-  transition: margin-left 0.25s ease-in-out;
-  min-height: 100%;
-  background-color: #f8f9fa;
 }
 
 @media (max-width: 767.98px) {

@@ -33,6 +33,17 @@ You are an expert in TypeScript, Angular, and scalable web application developme
 - Do NOT use `ngStyle`, use `style` bindings instead
 - When using external templates/styles, use paths relative to the component TS file.
 
+## Styling & Responsive Design
+
+- Layouts MUST be responsive. Design mobile-first and adapt up with media queries (or container queries).
+- Use CSS Grid / Flexbox for collection layouts (e.g. article lists, card galleries) — do NOT lay items out with fixed widths or floats.
+  - Prefer auto-responsive grids, e.g. `grid-template-columns: repeat(auto-fill, minmax(280px, 1fr))`, so columns reflow without per-breakpoint rules.
+  - Use `gap` for spacing instead of margins between grid/flex items.
+- Define and reuse responsive breakpoints consistently across components.
+- Use relative units (`rem`, `%`, `fr`, `clamp()`) over fixed `px` for sizing and spacing where appropriate.
+- Apply responsive utility/state classes via `class` bindings (never `ngClass`).
+- Verify layouts at mobile, tablet, and desktop widths; ensure no horizontal overflow and that touch targets meet WCAG AA.
+
 ## State Management
 
 - Use signals for local component state

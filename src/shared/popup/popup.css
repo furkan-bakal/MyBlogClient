@@ -1,0 +1,23 @@
+/* Bootstrap's .modal is hidden by default; force it visible since we control
+   open/close ourselves via the `open` signal rather than Bootstrap's JS. */
+.modal.show.d-block {
+  display: block;
+}
+
+.modal-backdrop.show {
+  opacity: 0.5;
+}
+
+/* Space out the projected footer content (buttons, etc.). */
+.modal-footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+/* Empty footer slot adds unwanted padding/border — collapse it when no
+   [popupFooter] content is projected. */
+.modal-footer:empty {
+  display: none;
+}

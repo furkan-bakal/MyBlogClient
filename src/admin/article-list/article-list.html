@@ -1,0 +1,77 @@
+<div class="card p-2">
+  <section class="article-list">
+  <h1>Makaleler</h1>
+
+  @switch (status()) {
+  @case ('loading') {
+  <p role="status">Yükleniyor…</p>
+  }
+  @case ('error') {
+  <p class="error" role="alert">Makaleler yüklenemedi.</p>
+  }
+  @default {
+  @if (articles().length === 0) {
+  <p role="status">Gösterilecek makale yok.</p>
+  } @else {
+  <table>
+    <caption class="visually-hidden">Makale listesi</caption>
+    <thead>
+      <tr>
+        <th scope="col">Başlık</th>
+        <th scope="col">Yazar</th>
+        <th scope="col">İçerik</th>
+        <th scope="col">Oluşturulma</th>
+        <th scope="col">Güncellenme</th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (article of articles(); track article.id) {
+      <tr>
+        <td>{{ article.title }}</td>
+        <td>{{ article.author }}</td>
+        <td>{{ article.content }}</td>
+        <td>{{ article.createdDate }}</td>
+        <td>{{ article.updatedDate ?? '—' }}</td>
+        <td>
+          <div class="d-flex gap-2">
+            <button type="button" class="btn btn-primary">Düzenle</button>
+            <button type="button" class="btn btn-danger" (click)="requestDelete(article)">Sil</button>
+          </div>
+        </td>
+      </tr>
+      }
+    </tbody>
+  </table>
+  }
+  }
+  }
+
+  <nav class="pager" aria-label="Sayfalama">
+    <button type="button" (click)="previousPage()" [disabled]="!hasPreviousPage()">Önceki</button>
+    <span aria-live="polite">Sayfa {{ page() + 1 }}</span>
+    <button type="button" (click)="nextPage()" [disabled]="!hasNextPage()">Sonraki</button>
+  </nav>
+
+  <app-popup
+    [open]="deleteOpen()"
+    (closed)="cancelDelete()"
+    [dismissable]="!deleting()"
+    title="Makaleyi sil"
+    size="sm"
+  >
+    <p>
+      <strong>{{ articleToDelete()?.title }}</strong> başlıklı makaleyi silmek istediğinize emin
+      misiniz? Bu işlem geri alınamaz.
+    </p>
+    <div popupFooter class="d-flex gap-2">
+      <button type="button" class="btn btn-secondary" (click)="cancelDelete()" [disabled]="deleting()">
+        Vazgeç
+      </button>
+      <button type="button" class="btn btn-danger" (click)="confirmDelete()" [disabled]="deleting()">
+        {{ deleting() ? 'Siliniyor…' : 'Sil' }}
+      </button>
+    </div>
+  </app-popup>
+</section>
+</div>

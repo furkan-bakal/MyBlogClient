@@ -14,6 +14,10 @@ export const ADMIN_ROUTES: Routes = [
         path: 'dashboard',
         loadComponent: () => import('./dashboard/dashboard').then((m) => m.Dashboard),
       },
+      {
+        path: 'articles',
+        loadComponent: () => import('./article-list/article-list').then((m) => m.ArticleList),
+      },
     ],
   },
 ];
