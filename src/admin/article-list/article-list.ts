@@ -7,6 +7,8 @@ import {
   signal,
 } from '@angular/core';
 import { takeUntilDestroyed, toObservable, toSignal } from '@angular/core/rxjs-interop';
+import { RouterLink } from '@angular/router';
+import { ApiDatePipe } from '../../shared/pipes/api-date.pipe';
 import { catchError, map, of, startWith, switchMap } from 'rxjs';
 import { Article } from '../../article/models/article.model';
 import { ArticleService } from '../../article/services/article.service';
@@ -24,7 +26,7 @@ const PAGE_SIZE = 10;
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './article-list.html',
   styleUrl: './article-list.css',
-  imports: [Popup],
+  imports: [Popup, ApiDatePipe, RouterLink],
 })
 export class ArticleList {
   private readonly articleService = inject(ArticleService);
@@ -63,6 +65,20 @@ export class ArticleList {
   /** A full page implies there may be more; a short page means we are at the end. */
   protected readonly hasNextPage = computed(() => this.articles().length === this.pageSize);
   protected readonly hasPreviousPage = computed(() => this.page() > 0);
+
+  /** "Showing X to Y" range for the current page (count of loaded rows). */
+  protected readonly rangeStart = computed(() =>
+    this.articles().length === 0 ? 0 : this.page() * this.pageSize + 1,
+  );
+  protected readonly rangeEnd = computed(() => this.page() * this.pageSize + this.articles().length);
+
+  /**
+   * The API model has no status field yet, so we derive a placeholder badge:
+   * never-edited posts read as drafts. Replace once the API exposes status.
+   */
+  protected isDraft(article: Article): boolean {
+    return article.updatedDate === null;
+  }
 
   protected nextPage(): void {
     if (this.hasNextPage()) {

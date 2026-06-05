@@ -1,0 +1,236 @@
+:host {
+  display: block;
+}
+
+/* --- Action bar --- */
+.editor__bar-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--md-primary);
+}
+
+.editor__focus {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--md-on-surface-variant);
+}
+
+.editor__saved {
+  font-size: 0.85rem;
+  color: var(--md-on-surface-variant);
+  padding-left: 0.75rem;
+  border-left: 1px solid var(--md-outline-variant);
+}
+
+.editor__error {
+  background-color: var(--md-error-container);
+  color: var(--md-on-error-container);
+  padding: 0.75rem 1rem;
+  border-radius: var(--md-radius-lg);
+  margin-bottom: 1rem;
+}
+
+/* --- Editor surface --- */
+.editor__surface {
+  background-color: var(--md-surface-container-lowest);
+  border: 1px solid var(--md-outline-variant);
+  border-radius: var(--md-radius-xl);
+  padding: 1.5rem;
+}
+
+.editor__title {
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--md-on-surface);
+  padding: 0;
+}
+
+.editor__title::placeholder {
+  color: var(--md-outline-variant);
+}
+
+.editor__toolbar {
+  margin: 1rem 0 0.5rem;
+  padding: 0.5rem 0;
+  border-top: 1px solid var(--md-outline-variant);
+  border-bottom: 1px solid var(--md-outline-variant);
+}
+
+.editor__content {
+  width: 100%;
+  min-height: 320px;
+  border: none;
+  outline: none;
+  resize: vertical;
+  background: transparent;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--md-on-surface);
+  padding-top: 1rem;
+}
+
+.editor__content::placeholder {
+  color: var(--md-on-surface-variant);
+}
+
+.editor__field-error {
+  color: var(--md-error);
+  font-size: 0.8rem;
+  margin: 0.5rem 0 0;
+}
+
+/* --- Mobile footer --- */
+.editor__footer {
+  padding-top: 1rem;
+  border-top: 1px solid var(--md-outline-variant);
+}
+
+.editor__words {
+  font-size: 0.85rem;
+  color: var(--md-on-surface-variant);
+}
+
+/* --- Settings panels --- */
+.editor__panel {
+  background-color: var(--md-surface-container-lowest);
+  border: 1px solid var(--md-outline-variant);
+  border-radius: var(--md-radius-xl);
+  padding: 1.25rem;
+}
+
+.editor__panel-title {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--md-on-surface-variant);
+  margin: 0 0 0.75rem;
+}
+
+.editor__settings .editor__setting-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0;
+}
+
+.editor__settings .editor__setting-row + .editor__setting-row {
+  border-top: 1px solid var(--md-outline-variant);
+}
+
+.editor__settings dt {
+  font-weight: 400;
+  color: var(--md-on-surface);
+}
+
+.editor__settings dd {
+  margin: 0;
+  font-weight: 600;
+  color: var(--md-on-surface);
+}
+
+.editor__setting-link {
+  color: var(--md-primary) !important;
+}
+
+.editor__author {
+  border: 1px solid var(--md-outline-variant);
+  border-radius: var(--md-radius-lg);
+  padding: 0.25rem 0.5rem;
+  font-size: 0.9rem;
+  text-align: right;
+  max-width: 9rem;
+  color: var(--md-on-surface);
+}
+
+.editor__author:focus {
+  outline: none;
+  border-color: var(--md-primary);
+}
+
+.editor__add-link,
+.editor__setting-link {
+  border: none;
+  background: transparent;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--md-primary);
+}
+
+/* --- Categories --- */
+.editor__categories {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.editor__category {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  font-size: 0.95rem;
+  color: var(--md-on-surface);
+  cursor: pointer;
+}
+
+.editor__category input {
+  width: 1.1rem;
+  height: 1.1rem;
+  accent-color: var(--md-primary);
+}
+
+.editor__muted {
+  color: var(--md-on-surface-variant);
+  font-size: 0.9rem;
+}
+
+/* --- Tags --- */
+.editor__tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.25rem 0.5rem 0.25rem 0.625rem;
+  border-radius: 999px;
+  background-color: var(--md-surface-container);
+  color: var(--md-on-surface);
+  font-size: 0.8rem;
+}
+
+.editor__tag button {
+  display: inline-flex;
+  align-items: center;
+  border: none;
+  background: transparent;
+  color: var(--md-on-surface-variant);
+  padding: 0;
+}
+
+.editor__tag .material-symbols-outlined {
+  font-size: 16px;
+}
+
+/* --- Featured image dropzone --- */
+.editor__dropzone {
+  width: 100%;
+  min-height: 8rem;
+  border: 1px dashed var(--md-outline-variant);
+  border-radius: var(--md-radius-lg);
+  background-color: var(--md-surface-container-low);
+  color: var(--md-on-surface-variant);
+  font-size: 0.85rem;
+  text-align: center;
+}
+
+.editor__dropzone:hover {
+  border-color: var(--md-primary);
+  color: var(--md-primary);
+}
+
+.editor__dropzone .material-symbols-outlined {
+  font-size: 28px;
+}

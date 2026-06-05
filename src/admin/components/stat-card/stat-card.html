@@ -1,0 +1,20 @@
+<div class="stat-card h-100 d-flex flex-column justify-content-between p-3 p-md-4">
+  <div class="d-flex justify-content-between align-items-start mb-3">
+    <span class="stat-card__icon d-inline-flex align-items-center justify-content-center">
+      <span class="material-symbols-outlined" aria-hidden="true">{{ icon() }}</span>
+    </span>
+    <span
+      class="stat-card__trend d-inline-flex align-items-center gap-1"
+      [class.stat-card__trend--up]="isUp()"
+      [class.stat-card__trend--down]="!isUp()"
+    >
+      <span class="material-symbols-outlined" aria-hidden="true">{{ trendIcon() }}</span>
+      {{ trend() }}
+    </span>
+  </div>
+
+  <div>
+    <div class="stat-card__value">{{ value() }}</div>
+    <div class="stat-card__label">{{ label() }}</div>
+  </div>
+</div>

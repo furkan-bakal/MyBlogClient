@@ -1,0 +1,42 @@
+:host {
+  display: block;
+}
+
+.activity-item__icon {
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 50%;
+  background-color: var(--md-surface-container-high);
+  color: var(--md-on-surface-variant);
+}
+
+.activity-item__icon .material-symbols-outlined {
+  font-size: 18px;
+}
+
+.activity-item__icon--primary {
+  background-color: var(--md-primary-fixed);
+  color: var(--md-primary);
+}
+
+.activity-item__icon--error {
+  background-color: var(--md-error-container);
+  color: var(--md-on-error-container);
+}
+
+.activity-item__text {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: var(--md-on-surface);
+}
+
+.activity-item__time {
+  display: block;
+  margin-top: 0.25rem;
+  font-size: 0.75rem;
+  color: var(--md-on-surface-variant);
+}
+
+.shrink-0 {
+  flex-shrink: 0;
+}

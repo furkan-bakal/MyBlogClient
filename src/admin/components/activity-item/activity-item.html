@@ -1,0 +1,19 @@
+<div class="activity-item d-flex gap-3 align-items-start">
+  <span
+    class="activity-item__icon d-inline-flex align-items-center justify-content-center shrink-0"
+    [class.activity-item__icon--primary]="tone() === 'primary'"
+    [class.activity-item__icon--error]="tone() === 'error'"
+  >
+    <span class="material-symbols-outlined" aria-hidden="true">{{ icon() }}</span>
+  </span>
+
+  <div class="activity-item__content">
+    <p class="activity-item__text m-0">
+      @if (title(); as lead) {
+        <span class="fw-bold">{{ lead }}</span>
+      }
+      {{ text() }}
+    </p>
+    <span class="activity-item__time">{{ time() }}</span>
+  </div>
+</div>

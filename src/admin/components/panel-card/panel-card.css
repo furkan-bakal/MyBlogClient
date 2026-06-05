@@ -1,0 +1,24 @@
+:host {
+  display: block;
+}
+
+.panel-card {
+  background-color: var(--md-surface-container-lowest);
+  border: 1px solid var(--md-outline-variant);
+  border-radius: var(--md-radius-xl);
+  transition: box-shadow 0.2s ease-in-out;
+}
+
+.panel-card:hover {
+  box-shadow: var(--md-shadow-hover);
+}
+
+.panel-card__title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--md-on-surface);
+}
+
+.panel-card__icon {
+  color: var(--md-outline);
+}

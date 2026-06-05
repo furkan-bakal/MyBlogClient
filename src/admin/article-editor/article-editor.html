@@ -1,0 +1,156 @@
+<form class="editor" [formGroup]="form" (ngSubmit)="publish()">
+  <!-- Action bar -->
+  <div class="editor__bar d-flex align-items-center gap-2 gap-md-3 mb-3 mb-md-4">
+    <a routerLink="/admin/articles" class="btn btn-icon d-lg-none" aria-label="Back to posts">
+      <span class="material-symbols-outlined" aria-hidden="true">arrow_back</span>
+    </a>
+    <span class="editor__bar-title d-lg-none">New Post</span>
+
+    <span class="editor__focus d-none d-lg-inline-flex align-items-center gap-2">
+      <span class="material-symbols-outlined" aria-hidden="true">crop_free</span>
+      Focus Mode
+    </span>
+    <span class="editor__saved d-none d-lg-inline">Draft — not saved yet</span>
+
+    <div class="d-flex align-items-center gap-2 ms-auto">
+      <button type="button" class="btn btn-ghost rounded-pill px-3">Preview</button>
+      <button
+        type="submit"
+        class="btn btn-primary-md rounded-pill px-3"
+        [disabled]="submitting()"
+      >
+        {{ submitting() ? 'Publishing…' : 'Publish' }}
+      </button>
+    </div>
+  </div>
+
+  @if (errorMessage(); as message) {
+    <p class="editor__error" role="alert">{{ message }}</p>
+  }
+
+  <div class="row g-3 g-lg-4">
+    <!-- Editor column -->
+    <div class="col-12 col-lg-8">
+      <div class="editor__surface">
+        <input
+          type="text"
+          class="editor__title"
+          placeholder="Post Title..."
+          formControlName="title"
+          aria-label="Post title"
+        />
+        @if (form.controls.title.touched && form.controls.title.invalid) {
+          <p class="editor__field-error" role="alert">A title is required.</p>
+        }
+
+        <!-- Formatting toolbar (visual) -->
+        <div class="editor__toolbar d-flex align-items-center flex-wrap gap-1" role="toolbar" aria-label="Text formatting">
+          @for (tool of tools; track tool.icon) {
+            <button type="button" class="btn btn-icon" [attr.aria-label]="tool.label">
+              <span class="material-symbols-outlined" aria-hidden="true">{{ tool.icon }}</span>
+            </button>
+          }
+        </div>
+
+        <textarea
+          class="editor__content"
+          placeholder="Start writing..."
+          formControlName="content"
+          aria-label="Post content"
+        ></textarea>
+      </div>
+
+      <!-- Mobile footer: word count + save draft -->
+      <div class="editor__footer d-lg-none d-flex justify-content-between align-items-center mt-3">
+        <span class="editor__words">Words: {{ wordCount() }}</span>
+        <button type="submit" class="btn btn-tonal rounded-pill px-3 d-inline-flex align-items-center gap-1" [disabled]="submitting()">
+          <span class="material-symbols-outlined" aria-hidden="true">save</span>
+          Save Draft
+        </button>
+      </div>
+    </div>
+
+    <!-- Settings panel -->
+    <aside class="col-12 col-lg-4 d-flex flex-column gap-3 gap-lg-4">
+      <!-- Publish settings -->
+      <section class="editor__panel">
+        <h2 class="editor__panel-title">Publish Settings</h2>
+        <dl class="editor__settings m-0">
+          <div class="editor__setting-row">
+            <dt>Visibility</dt>
+            <dd>Public</dd>
+          </div>
+          <div class="editor__setting-row">
+            <dt>Publish Date</dt>
+            <dd class="editor__setting-link">Immediately</dd>
+          </div>
+          <div class="editor__setting-row">
+            <dt><label for="author">Author</label></dt>
+            <dd><input id="author" type="text" class="editor__author" formControlName="author" /></dd>
+          </div>
+        </dl>
+      </section>
+
+      <!-- Categories -->
+      <section class="editor__panel">
+        <div class="d-flex justify-content-between align-items-center mb-2">
+          <h2 class="editor__panel-title m-0">Categories</h2>
+          <button type="button" class="editor__add-link">Add New</button>
+        </div>
+        <div class="editor__categories">
+          @for (category of categories(); track category.id) {
+            <label class="editor__category">
+              <input
+                type="radio"
+                name="category"
+                [value]="category.id"
+                [checked]="selectedCategoryId() === category.id"
+                (change)="selectCategory(category.id)"
+              />
+              <span>{{ category.name }}</span>
+            </label>
+          } @empty {
+            <p class="editor__muted m-0">No categories available.</p>
+          }
+        </div>
+        @if (form.controls.categoryId.touched && form.controls.categoryId.invalid) {
+          <p class="editor__field-error" role="alert">Choose a category.</p>
+        }
+      </section>
+
+      <!-- Tags -->
+      <section class="editor__panel">
+        <h2 class="editor__panel-title">Tags</h2>
+        <input
+          type="text"
+          class="editor__tag-input md-input form-control"
+          placeholder="Add a tag…"
+          #tagInput
+          (keydown.enter)="$event.preventDefault(); addTag(tagInput)"
+          aria-label="Add a tag"
+        />
+        @if (tags().length > 0) {
+          <div class="editor__tags d-flex flex-wrap gap-2 mt-2">
+            @for (tag of tags(); track tag) {
+              <span class="editor__tag">
+                {{ tag }}
+                <button type="button" (click)="removeTag(tag)" [attr.aria-label]="'Remove ' + tag">
+                  <span class="material-symbols-outlined" aria-hidden="true">close</span>
+                </button>
+              </span>
+            }
+          </div>
+        }
+      </section>
+
+      <!-- Featured image -->
+      <section class="editor__panel">
+        <h2 class="editor__panel-title">Featured Image</h2>
+        <button type="button" class="editor__dropzone d-flex flex-column align-items-center justify-content-center gap-2">
+          <span class="material-symbols-outlined" aria-hidden="true">add_photo_alternate</span>
+          <span>Click to upload or drag and drop</span>
+        </button>
+      </section>
+    </aside>
+  </div>
+</form>
