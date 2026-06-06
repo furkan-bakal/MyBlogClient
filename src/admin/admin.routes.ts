@@ -31,6 +31,10 @@ export const ADMIN_ROUTES: Routes = [
         loadComponent: () =>
           import('./category-editor/category-editor').then((m) => m.CategoryEditor),
       },
+      {
+        path: 'settings',
+        loadComponent: () => import('./settings/settings').then((m) => m.Settings),
+      },
     ],
   },
 ];

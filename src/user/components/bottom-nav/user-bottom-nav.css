@@ -1,0 +1,43 @@
+:host {
+  display: block;
+}
+
+.user-bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 64px;
+  background-color: var(--md-surface-container-lowest);
+  border-top: 1px solid var(--md-outline-variant);
+  z-index: 1030;
+  padding: 0 1rem;
+}
+
+.user-bottom-nav__item {
+  padding: 0.5rem 0.75rem;
+  border-radius: var(--md-radius-lg);
+  color: var(--md-on-surface-variant);
+  text-decoration: none;
+  transition: color 0.15s ease;
+  min-width: 44px;
+  min-height: 44px;
+  justify-content: center;
+}
+
+.user-bottom-nav__item:hover {
+  color: var(--md-primary);
+}
+
+.user-bottom-nav__item--active {
+  color: var(--md-primary);
+}
+
+.user-bottom-nav__item--active .material-symbols-outlined {
+  font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+.user-bottom-nav__label {
+  font-size: 0.75rem;
+  font-weight: 500;
+}

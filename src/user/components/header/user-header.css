@@ -1,0 +1,93 @@
+.user-header {
+  position: sticky;
+  top: 0;
+  z-index: 1030;
+  height: 64px;
+  padding: 0 1.5rem;
+  background-color: var(--md-surface);
+  border-bottom: 1px solid var(--md-outline-variant);
+  max-width: 1280px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* Full-width sticky background overlay */
+:host {
+  display: block;
+  position: sticky;
+  top: 0;
+  z-index: 1030;
+  background-color: var(--md-surface);
+  border-bottom: 1px solid var(--md-outline-variant);
+}
+
+.user-header__brand {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--md-primary);
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+}
+
+.user-header__brand:hover {
+  color: var(--md-primary);
+}
+
+/* Desktop nav links */
+.user-header__nav-link {
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--md-on-surface-variant);
+  text-decoration: none;
+  padding-bottom: 2px;
+  border-bottom: 2px solid transparent;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.user-header__nav-link:hover {
+  color: var(--md-primary);
+}
+
+.user-header__nav-link--active {
+  color: var(--md-primary);
+  font-weight: 700;
+  border-bottom-color: var(--md-primary);
+}
+
+/* Action buttons */
+.user-header__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 1rem;
+  border-radius: var(--md-radius-lg);
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-decoration: none;
+  letter-spacing: 0.03em;
+  transition: opacity 0.15s ease, background-color 0.15s ease;
+  white-space: nowrap;
+  cursor: pointer;
+  border: none;
+}
+
+.user-header__btn--outlined {
+  background-color: var(--md-surface-container-low);
+  color: var(--md-on-surface);
+  border: 1px solid var(--md-outline-variant);
+}
+
+.user-header__btn--outlined:hover {
+  background-color: var(--md-surface-container-high);
+  color: var(--md-on-surface);
+}
+
+.user-header__btn--primary {
+  background-color: var(--md-primary);
+  color: var(--md-on-primary);
+}
+
+.user-header__btn--primary:hover {
+  opacity: 0.9;
+  color: var(--md-on-primary);
+}

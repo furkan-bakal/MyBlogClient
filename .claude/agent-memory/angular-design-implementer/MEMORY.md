@@ -1,0 +1,8 @@
+- [User profile](user-role.md) — senior full-stack developer building MyBlogClient admin panel, Angular 21 + SSR
+- [API contract location](api-contract-location.md) — it's openapi.json, not the api.contract.ts named in CLAUDE.md
+- [API casing convention](api-casing-convention.md) — camelCase responses, PascalCase requests, ResponseModel wrapper
+- [API date format](api-date-format.md) — dates are "dd.MM.yyyy HH:mm:ss" strings; DatePipe can't parse, must convert first
+- [Stitch designs](stitch-designs.md) — reference UIs in src/stitch (Tailwind/M3) reimplemented in Bootstrap + --md-* tokens
+- [Responsive grid layouts](responsive-grid-layouts.md) — always responsive + CSS Grid/Flexbox for collections
+- [Settings page](settings-page.md) — admin settings implemented; API service is TODO (no endpoints in openapi.json yet)
+- [User screens](user-screens.md) — Home/ArticleDetail/About pages + layout shell + reusable components under src/user/

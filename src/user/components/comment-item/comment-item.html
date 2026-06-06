@@ -1,0 +1,22 @@
+<div class="comment-item d-flex gap-3">
+  <!-- Avatar -->
+  <div class="comment-item__avatar d-flex align-items-center justify-content-center flex-shrink-0" aria-hidden="true">
+    {{ comment().authorInitials }}
+  </div>
+
+  <!-- Content -->
+  <div class="flex-grow-1">
+    <div class="d-flex align-items-center justify-content-between mb-1">
+      <h4 class="comment-item__name m-0">{{ comment().authorName }}</h4>
+      <span class="comment-item__time">{{ comment().timeAgo }}</span>
+    </div>
+    <p class="comment-item__body m-0">{{ comment().body }}</p>
+    <div class="d-flex align-items-center gap-3 mt-2">
+      <button type="button" class="comment-item__action d-flex align-items-center gap-1">
+        <span class="material-symbols-outlined" style="font-size: 16px;" aria-hidden="true">thumb_up</span>
+        <span>{{ comment().likeCount }}</span>
+      </button>
+      <button type="button" class="comment-item__action" (click)="onReply()">Reply</button>
+    </div>
+  </div>
+</div>

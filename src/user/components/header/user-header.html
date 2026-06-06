@@ -1,0 +1,31 @@
+<header class="user-header d-flex justify-content-between align-items-center">
+  <!-- Brand + Desktop Nav -->
+  <div class="d-flex align-items-center gap-4">
+    <a routerLink="/home" class="user-header__brand text-decoration-none">
+      Modern Editorial
+    </a>
+    <nav class="user-header__nav d-none d-md-flex align-items-center gap-3" aria-label="Main navigation">
+      @for (item of navItems; track item.path) {
+        <a
+          [routerLink]="item.path"
+          routerLinkActive="user-header__nav-link--active"
+          class="user-header__nav-link"
+          [attr.aria-label]="item.label"
+        >
+          {{ item.label }}
+        </a>
+      }
+    </nav>
+  </div>
+
+  <!-- Trailing actions -->
+  <div class="d-flex align-items-center gap-2">
+    <a routerLink="/login" class="user-header__btn user-header__btn--outlined d-none d-sm-inline-flex">
+      Log In
+    </a>
+    <a routerLink="/admin" class="user-header__btn user-header__btn--primary d-none d-sm-inline-flex align-items-center gap-1">
+      <span class="material-symbols-outlined" style="font-size: 18px;" aria-hidden="true">edit_note</span>
+      Write Post
+    </a>
+  </div>
+</header>

@@ -1,0 +1,397 @@
+<div class="settings">
+  <!-- Page header -->
+  <div class="settings__header mb-4">
+    <h1 class="settings__title mb-1">Workspace Settings</h1>
+    <p class="settings__subtitle m-0">Manage your account preferences, publication details, and security.</p>
+  </div>
+
+  <!-- Bento grid -->
+  <div class="settings__grid">
+
+    <!-- ================================================================
+         Card 1: User Profile  (spans full width on all breakpoints)
+         ================================================================ -->
+    <section class="settings__card settings__card--profile" aria-labelledby="section-profile">
+      <div class="settings__card-header">
+        <h2 id="section-profile" class="settings__card-title">User Profile</h2>
+        <button
+          type="button"
+          class="btn btn-ghost btn-sm settings__edit-btn"
+          [attr.aria-expanded]="profileEditing()"
+          (click)="toggleProfileEdit()"
+        >
+          {{ profileEditing() ? 'Cancel' : 'Edit' }}
+        </button>
+      </div>
+
+      <!-- Save status toast -->
+      @if (profileSaveStatus() === 'success') {
+        <p class="settings__status settings__status--success" role="status" aria-live="polite">
+          Profile updated successfully.
+        </p>
+      }
+
+      <div class="settings__profile-body">
+        <!-- Avatar -->
+        <div class="settings__avatar-wrap">
+          @if (profile().avatarUrl) {
+            <img
+              class="settings__avatar"
+              [src]="profile().avatarUrl"
+              [alt]="profile().fullName + ' avatar'"
+            />
+          } @else {
+            <span class="settings__avatar settings__avatar--initials" aria-hidden="true">
+              {{ avatarInitials() }}
+            </span>
+          }
+          @if (profileEditing()) {
+            <button
+              type="button"
+              class="settings__avatar-overlay"
+              aria-label="Change profile photo"
+            >
+              <span class="material-symbols-outlined" aria-hidden="true">photo_camera</span>
+            </button>
+          }
+        </div>
+
+        <!-- Profile form -->
+        <form
+          [formGroup]="profileForm"
+          (ngSubmit)="saveProfile()"
+          class="settings__profile-form"
+          aria-label="Edit profile"
+          novalidate
+        >
+          <div class="row g-3">
+            <div class="col-12 col-md-6">
+              <label class="form-label settings__label" for="profile-full-name">Full Name</label>
+              <input
+                id="profile-full-name"
+                type="text"
+                class="form-control md-input"
+                [class.is-invalid]="hasError('fullName', 'profile')"
+                [attr.readonly]="profileEditing() ? null : true"
+                formControlName="fullName"
+                autocomplete="name"
+              />
+              @if (hasError('fullName', 'profile')) {
+                <div class="invalid-feedback">Full name is required.</div>
+              }
+            </div>
+            <div class="col-12 col-md-6">
+              <label class="form-label settings__label" for="profile-email">Email Address</label>
+              <input
+                id="profile-email"
+                type="email"
+                class="form-control md-input"
+                [class.is-invalid]="hasError('email', 'profile')"
+                [attr.readonly]="profileEditing() ? null : true"
+                formControlName="email"
+                autocomplete="email"
+              />
+              @if (hasError('email', 'profile')) {
+                <div class="invalid-feedback">A valid email address is required.</div>
+              }
+            </div>
+          </div>
+
+          @if (profileEditing()) {
+            <div class="d-flex justify-content-end mt-3">
+              <button type="submit" class="btn btn-primary-md px-4 rounded-pill">
+                Update Profile
+              </button>
+            </div>
+          }
+        </form>
+      </div>
+    </section>
+
+    <!-- ================================================================
+         Card 2: Publication Details
+         ================================================================ -->
+    <section class="settings__card settings__card--publication" aria-labelledby="section-publication">
+      <div class="settings__card-header settings__card-header--column">
+        <h2 id="section-publication" class="settings__card-title">Publication Details</h2>
+        <p class="settings__card-subtitle m-0">Configure your primary publication settings.</p>
+      </div>
+
+      @if (publicationSaveStatus() === 'success') {
+        <p class="settings__status settings__status--success" role="status" aria-live="polite">
+          Publication details saved.
+        </p>
+      }
+
+      <form
+        [formGroup]="publicationForm"
+        (ngSubmit)="savePublication()"
+        aria-label="Publication details"
+        novalidate
+      >
+        <div class="mb-3">
+          <label class="form-label settings__label" for="pub-blog-title">Blog Title</label>
+          <input
+            id="pub-blog-title"
+            type="text"
+            class="form-control md-input"
+            [class.is-invalid]="hasError('blogTitle', 'publication')"
+            formControlName="blogTitle"
+          />
+          @if (hasError('blogTitle', 'publication')) {
+            <div class="invalid-feedback">Blog title is required (max 80 characters).</div>
+          }
+        </div>
+
+        <div class="mb-1">
+          <label class="form-label settings__label" for="pub-meta-description">
+            Meta Description
+          </label>
+          <textarea
+            id="pub-meta-description"
+            class="form-control md-input"
+            [class.is-invalid]="hasError('metaDescription', 'publication')"
+            formControlName="metaDescription"
+            rows="3"
+          ></textarea>
+          <div class="d-flex justify-content-between align-items-center mt-1">
+            @if (hasError('metaDescription', 'publication')) {
+              <div class="invalid-feedback d-block">Maximum 160 characters.</div>
+            } @else {
+              <span></span>
+            }
+            <span
+              class="settings__char-count"
+              [class.settings__char-count--over]="descriptionLength() > 160"
+              aria-live="polite"
+              aria-label="{{ descriptionLength() }} of 160 characters"
+            >
+              {{ descriptionLength() }} / 160
+            </span>
+          </div>
+        </div>
+
+        <div class="d-flex justify-content-end mt-3">
+          <button type="submit" class="btn btn-primary-md px-4 rounded-pill">
+            Save Changes
+          </button>
+        </div>
+      </form>
+    </section>
+
+    <!-- ================================================================
+         Card 3: Preferences
+         ================================================================ -->
+    <section class="settings__card settings__card--prefs" aria-labelledby="section-prefs">
+      <div class="settings__card-header">
+        <h2 id="section-prefs" class="settings__card-title">Preferences</h2>
+      </div>
+
+      <ul class="list-unstyled m-0 d-flex flex-column gap-3">
+        <!-- Dark Mode -->
+        <li class="settings__pref-row">
+          <div class="settings__pref-text">
+            <span class="settings__pref-label" id="pref-dark-mode-label">Dark Mode</span>
+            <span class="settings__pref-desc">Switch interface to dark theme</span>
+          </div>
+          <button
+            type="button"
+            class="settings__toggle"
+            role="switch"
+            [attr.aria-checked]="prefs().darkMode"
+            aria-labelledby="pref-dark-mode-label"
+            [class.settings__toggle--on]="prefs().darkMode"
+            (click)="togglePref('darkMode')"
+          >
+            <span class="settings__toggle-thumb"></span>
+            <span class="visually-hidden">{{ prefs().darkMode ? 'On' : 'Off' }}</span>
+          </button>
+        </li>
+
+        <!-- Push Notifications -->
+        <li class="settings__pref-row">
+          <div class="settings__pref-text">
+            <span class="settings__pref-label" id="pref-push-label">Push Notifications</span>
+            <span class="settings__pref-desc">Receive alerts for new comments</span>
+          </div>
+          <button
+            type="button"
+            class="settings__toggle"
+            role="switch"
+            [attr.aria-checked]="prefs().pushNotifications"
+            aria-labelledby="pref-push-label"
+            [class.settings__toggle--on]="prefs().pushNotifications"
+            (click)="togglePref('pushNotifications')"
+          >
+            <span class="settings__toggle-thumb"></span>
+            <span class="visually-hidden">{{ prefs().pushNotifications ? 'On' : 'Off' }}</span>
+          </button>
+        </li>
+
+        <!-- Weekly Digest -->
+        <li class="settings__pref-row">
+          <div class="settings__pref-text">
+            <span class="settings__pref-label" id="pref-digest-label">Weekly Digest</span>
+            <span class="settings__pref-desc">Email summary of analytics</span>
+          </div>
+          <button
+            type="button"
+            class="settings__toggle"
+            role="switch"
+            [attr.aria-checked]="prefs().weeklyDigest"
+            aria-labelledby="pref-digest-label"
+            [class.settings__toggle--on]="prefs().weeklyDigest"
+            (click)="togglePref('weeklyDigest')"
+          >
+            <span class="settings__toggle-thumb"></span>
+            <span class="visually-hidden">{{ prefs().weeklyDigest ? 'On' : 'Off' }}</span>
+          </button>
+        </li>
+      </ul>
+    </section>
+
+    <!-- ================================================================
+         Card 4: Security  (spans full width on all breakpoints)
+         ================================================================ -->
+    <section class="settings__card settings__card--security" aria-labelledby="section-security">
+      <div class="settings__card-header">
+        <h2 id="section-security" class="settings__card-title">Security</h2>
+      </div>
+
+      @if (passwordSaveStatus() === 'success') {
+        <p class="settings__status settings__status--success" role="status" aria-live="polite">
+          Password changed successfully.
+        </p>
+      }
+
+      <div class="settings__security-grid">
+        <!-- Change Password -->
+        <div>
+          <h3 class="settings__security-subtitle mb-3">Change Password</h3>
+
+          <button
+            type="button"
+            class="btn btn-ghost w-100 d-flex justify-content-between align-items-center mb-3"
+            [attr.aria-expanded]="passwordExpanded()"
+            aria-controls="password-form-region"
+            (click)="togglePasswordForm()"
+          >
+            <span>{{ passwordExpanded() ? 'Hide password form' : 'Update password' }}</span>
+            <span
+              class="material-symbols-outlined settings__chevron"
+              [class.settings__chevron--open]="passwordExpanded()"
+              aria-hidden="true"
+            >chevron_right</span>
+          </button>
+
+          @if (passwordExpanded()) {
+            <form
+              id="password-form-region"
+              [formGroup]="passwordForm"
+              (ngSubmit)="savePassword()"
+              aria-label="Change password"
+              novalidate
+              class="d-flex flex-column gap-3"
+            >
+              <div>
+                <label class="form-label settings__label" for="current-password">
+                  Current Password
+                </label>
+                <input
+                  id="current-password"
+                  type="password"
+                  class="form-control md-input"
+                  [class.is-invalid]="hasError('currentPassword', 'password')"
+                  formControlName="currentPassword"
+                  autocomplete="current-password"
+                />
+                @if (hasError('currentPassword', 'password')) {
+                  <div class="invalid-feedback">Enter your current password (min 8 characters).</div>
+                }
+              </div>
+
+              <div>
+                <label class="form-label settings__label" for="new-password">New Password</label>
+                <input
+                  id="new-password"
+                  type="password"
+                  class="form-control md-input"
+                  [class.is-invalid]="hasError('newPassword', 'password')"
+                  formControlName="newPassword"
+                  autocomplete="new-password"
+                />
+                @if (hasError('newPassword', 'password')) {
+                  <div class="invalid-feedback">New password must be at least 8 characters.</div>
+                }
+              </div>
+
+              <div>
+                <label class="form-label settings__label" for="confirm-password">
+                  Confirm New Password
+                </label>
+                <input
+                  id="confirm-password"
+                  type="password"
+                  class="form-control md-input"
+                  [class.is-invalid]="hasError('confirmPassword', 'password') || passwordMismatch"
+                  formControlName="confirmPassword"
+                  autocomplete="new-password"
+                />
+                @if (passwordMismatch) {
+                  <div class="invalid-feedback">Passwords do not match.</div>
+                }
+              </div>
+
+              <div>
+                <button type="submit" class="btn btn-ghost px-4 rounded-pill">
+                  Update Password
+                </button>
+              </div>
+            </form>
+          }
+        </div>
+
+        <!-- Two-Factor Authentication -->
+        <div class="settings__security-2fa">
+          <h3 class="settings__security-subtitle mb-3">Two-Factor Authentication</h3>
+          <p class="settings__card-subtitle mb-3">
+            Add an extra layer of security by requiring a code from your authenticator app on each
+            sign-in.
+          </p>
+          <div class="settings__2fa-status">
+            <div class="d-flex align-items-center gap-2">
+              <span class="material-symbols-outlined settings__2fa-icon" aria-hidden="true">
+                shield_lock
+              </span>
+              <span class="settings__label">
+                Status: <span class="settings__2fa-state">Disabled</span>
+              </span>
+            </div>
+            <button type="button" class="btn btn-primary-md px-3 rounded-pill">
+              Enable 2FA
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================
+         Card 5: Session / Danger Zone
+         ================================================================ -->
+    <section class="settings__card settings__card--session" aria-labelledby="section-session">
+      <h2 id="section-session" class="settings__card-title mb-2">Session</h2>
+      <p class="settings__card-subtitle mb-4">
+        Securely log out of the editorial console on this device.
+      </p>
+      <button
+        type="button"
+        class="btn settings__logout-btn d-inline-flex align-items-center gap-2"
+        (click)="logout()"
+      >
+        <span class="material-symbols-outlined" aria-hidden="true">logout</span>
+        Log Out
+      </button>
+    </section>
+
+  </div>
+</div>

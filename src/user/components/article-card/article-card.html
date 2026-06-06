@@ -1,0 +1,64 @@
+@if (featured()) {
+  <!-- Featured wide card: image left, content right -->
+  <article
+    class="article-card article-card--featured"
+    [attr.aria-label]="article().title"
+  >
+    <div class="article-card__featured-img-wrap">
+      <!-- Placeholder gradient since images aren't in the API yet -->
+      <div class="article-card__img-placeholder" aria-hidden="true">
+        <span class="material-symbols-outlined">article</span>
+      </div>
+      @if (categoryName()) {
+        <span class="article-card__category-badge article-card__category-badge--primary">
+          {{ categoryName() }}
+        </span>
+      }
+    </div>
+
+    <div class="article-card__featured-body d-flex flex-column justify-content-between p-4">
+      <div>
+        <span class="article-card__date">{{ article().createdDate | apiDate: 'MMM d, y' }}</span>
+        <h3 class="article-card__title article-card__title--lg mt-2 mb-3">
+          {{ article().title }}
+        </h3>
+        <p class="article-card__excerpt">
+          {{ article().content | slice: 0 : 200 }}{{ article().content.length > 200 ? '…' : '' }}
+        </p>
+      </div>
+      <div class="mt-3">
+        <a [routerLink]="['/articles', article().id]" class="article-card__read-more d-inline-flex align-items-center gap-1">
+          Read More
+          <span class="material-symbols-outlined" style="font-size: 18px;" aria-hidden="true">arrow_forward</span>
+        </a>
+      </div>
+    </div>
+  </article>
+} @else {
+  <!-- Standard card: image top, content bottom -->
+  <article
+    class="article-card"
+    [attr.aria-label]="article().title"
+  >
+    <div class="article-card__img-wrap">
+      <div class="article-card__img-placeholder" aria-hidden="true">
+        <span class="material-symbols-outlined">article</span>
+      </div>
+      @if (categoryName()) {
+        <span class="article-card__category-badge">{{ categoryName() }}</span>
+      }
+    </div>
+
+    <div class="article-card__body p-3">
+      <span class="article-card__date">{{ article().createdDate | apiDate: 'MMM d, y' }}</span>
+      <h3 class="article-card__title mt-1 mb-2">{{ article().title }}</h3>
+      <p class="article-card__excerpt">
+        {{ article().content | slice: 0 : 120 }}{{ article().content.length > 120 ? '…' : '' }}
+      </p>
+      <a [routerLink]="['/articles', article().id]" class="article-card__read-more d-inline-flex align-items-center gap-1 mt-3">
+        Read More
+        <span class="material-symbols-outlined" style="font-size: 18px;" aria-hidden="true">arrow_forward</span>
+      </a>
+    </div>
+  </article>
+}

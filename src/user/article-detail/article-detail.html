@@ -1,0 +1,157 @@
+<div class="article-detail d-flex">
+  <!-- Category Sidebar (desktop only) -->
+  <app-user-sidebar
+    class="d-none d-md-block"
+    [categories]="categories()"
+    [activeCategoryId]="article()?.categoryId ?? null"
+    (categorySelected)="onCategorySelected($event)"
+  />
+
+  <!-- Main canvas -->
+  <main class="article-detail__canvas flex-grow-1 px-3 px-md-4 py-4">
+
+    <!-- Loading -->
+    @if (status() === 'loading') {
+      <div class="article-detail__state d-flex align-items-center justify-content-center py-5">
+        <div class="spinner-border text-primary" role="status">
+          <span class="visually-hidden">Loading article...</span>
+        </div>
+      </div>
+    }
+
+    <!-- Error -->
+    @if (status() === 'error') {
+      <div
+        class="article-detail__state d-flex flex-column align-items-center justify-content-center py-5 gap-3"
+        role="alert"
+      >
+        <span class="material-symbols-outlined article-detail__state-icon" aria-hidden="true">error_outline</span>
+        <p class="m-0">Could not load the article. Please try again.</p>
+      </div>
+    }
+
+    <!-- Article content -->
+    @if (status() === 'loaded' && article(); as art) {
+      <article class="article-detail__article mx-auto">
+
+        <!-- Headline section -->
+        <header class="mb-4">
+          <div class="d-flex align-items-center gap-2 mb-3">
+            @if (categoryName()) {
+              <span class="article-detail__badge">{{ categoryName() | uppercase }}</span>
+            }
+            <span class="article-detail__read-time">• 8 min read</span>
+          </div>
+          <h1 class="article-detail__title mb-4">{{ art.title }}</h1>
+
+          <!-- Meta row -->
+          <div class="d-flex align-items-center justify-content-between flex-wrap gap-3 py-3 article-detail__meta-row">
+            <div class="d-flex align-items-center gap-3">
+              <div class="article-detail__author-avatar d-flex align-items-center justify-content-center" aria-hidden="true">
+                {{ art.author[0] | uppercase }}
+              </div>
+              <div>
+                <p class="article-detail__author-name m-0">{{ art.author }}</p>
+                <p class="article-detail__author-meta m-0">
+                  {{ art.createdDate | apiDate: 'MMM d, y' }}
+                </p>
+              </div>
+            </div>
+            <div class="d-flex gap-2">
+              <button
+                type="button"
+                class="article-detail__icon-btn"
+                aria-label="Share article"
+              >
+                <span class="material-symbols-outlined" aria-hidden="true">share</span>
+              </button>
+              <button
+                type="button"
+                class="article-detail__icon-btn"
+                aria-label="Bookmark article"
+              >
+                <span class="material-symbols-outlined" aria-hidden="true">bookmark</span>
+              </button>
+            </div>
+          </div>
+        </header>
+
+        <!-- Hero image placeholder -->
+        <figure class="article-detail__hero mb-4">
+          <div class="article-detail__hero-img d-flex align-items-center justify-content-center" aria-hidden="true">
+            <span class="material-symbols-outlined">image</span>
+          </div>
+          <figcaption class="article-detail__hero-caption">
+            The intersection of aesthetic clarity and functional density.
+          </figcaption>
+        </figure>
+
+        <!-- Body content -->
+        <div class="article-detail__body mb-4">
+          <p class="article-detail__drop-cap">{{ art.content }}</p>
+        </div>
+
+        <!-- Like / engagement section -->
+        <section
+          class="d-flex flex-column align-items-center justify-content-center py-4 article-detail__engagement"
+          aria-label="Article engagement"
+        >
+          <p class="article-detail__engagement-label mb-3">Did you enjoy this piece?</p>
+          <button
+            type="button"
+            class="article-detail__like-btn d-flex flex-column align-items-center"
+            [class.article-detail__like-btn--liked]="liked()"
+            (click)="toggleLike()"
+            [attr.aria-pressed]="liked()"
+            aria-label="Like this article"
+          >
+            <div class="article-detail__like-circle d-flex align-items-center justify-content-center">
+              <span class="material-symbols-outlined article-detail__like-icon" aria-hidden="true">favorite</span>
+            </div>
+            <span class="article-detail__like-count mt-2">{{ likeCount() | number }} Likes</span>
+          </button>
+        </section>
+
+        <!-- Comments section -->
+        <section class="pt-4 article-detail__comments" aria-label="Comments">
+          <h2 class="article-detail__comments-title mb-4">Comments ({{ comments().length }})</h2>
+
+          <!-- Comment form -->
+          <div class="article-detail__comment-form p-4 mb-4">
+            <p class="article-detail__form-label mb-3">Join the discussion</p>
+            <form [formGroup]="commentForm" (ngSubmit)="submitComment()">
+              <div class="mb-3">
+                <label for="comment-body" class="visually-hidden">Your comment</label>
+                <textarea
+                  id="comment-body"
+                  formControlName="body"
+                  class="article-detail__textarea w-100 p-3"
+                  rows="4"
+                  placeholder="Write your thoughts..."
+                  aria-required="true"
+                ></textarea>
+              </div>
+              <div class="d-flex justify-content-end">
+                <button
+                  type="submit"
+                  class="article-detail__submit-btn"
+                  [disabled]="commentForm.invalid"
+                >
+                  Post Comment
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <!-- Comment list -->
+          <div class="d-flex flex-column gap-4">
+            @for (comment of comments(); track comment.id) {
+              <app-comment-item [comment]="comment" />
+            }
+          </div>
+        </section>
+
+      </article>
+    }
+  </main>
+</div>

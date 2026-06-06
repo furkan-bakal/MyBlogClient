@@ -1,0 +1,7 @@
+.user-shell {
+  background-color: var(--md-background);
+}
+
+.user-shell__main {
+  width: 100%;
+}

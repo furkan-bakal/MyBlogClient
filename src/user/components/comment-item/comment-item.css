@@ -1,0 +1,53 @@
+:host {
+  display: block;
+}
+
+.comment-item {
+  padding: 0;
+}
+
+.comment-item__avatar {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  background-color: var(--md-primary);
+  color: var(--md-on-primary);
+  font-size: 0.75rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.comment-item__name {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--md-on-surface);
+}
+
+.comment-item__time {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--md-on-surface-variant);
+}
+
+.comment-item__body {
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--md-on-surface-variant);
+}
+
+.comment-item__action {
+  display: inline-flex;
+  align-items: center;
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--md-on-surface-variant);
+  cursor: pointer;
+  transition: color 0.15s ease;
+}
+
+.comment-item__action:hover {
+  color: var(--md-primary);
+}

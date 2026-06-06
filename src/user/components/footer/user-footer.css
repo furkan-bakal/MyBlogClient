@@ -1,0 +1,42 @@
+:host {
+  display: block;
+}
+
+.user-footer {
+  background-color: var(--md-surface-container-lowest);
+  border-top: 1px solid var(--md-outline-variant);
+  padding: 2rem 1.5rem;
+}
+
+.user-footer__inner {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.user-footer__brand {
+  display: block;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--md-on-surface);
+  margin-bottom: 0.25rem;
+}
+
+.user-footer__copy {
+  font-size: 0.75rem;
+  color: var(--md-on-surface-variant);
+  opacity: 0.8;
+}
+
+.user-footer__link {
+  font-size: 0.75rem;
+  color: var(--md-on-surface-variant);
+  text-decoration: none;
+  opacity: 0.8;
+  transition: color 0.15s ease, opacity 0.15s ease;
+}
+
+.user-footer__link:hover {
+  color: var(--md-primary);
+  opacity: 1;
+  text-decoration: underline;
+}

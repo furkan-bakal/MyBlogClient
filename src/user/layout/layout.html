@@ -1,0 +1,15 @@
+<div class="user-shell d-flex flex-column min-vh-100">
+  <app-user-header />
+
+  <main id="main-content" class="user-shell__main flex-grow-1">
+    <router-outlet />
+  </main>
+
+  <app-user-footer />
+
+  <!-- Mobile bottom nav (hidden on md+) -->
+  <app-user-bottom-nav class="d-md-none" />
+
+  <!-- Spacer to clear fixed mobile bottom nav -->
+  <div class="d-md-none" style="height: 64px;" aria-hidden="true"></div>
+</div>
