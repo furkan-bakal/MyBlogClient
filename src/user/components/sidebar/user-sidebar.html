@@ -1,12 +1,12 @@
 <aside class="user-sidebar d-flex flex-column py-4">
   <!-- Title -->
   <div class="px-3 mb-4">
-    <h2 class="user-sidebar__title m-0">Categories</h2>
-    <p class="user-sidebar__subtitle m-0">Filter by topic</p>
+    <h2 class="user-sidebar__title m-0">Kategoriler</h2>
+    <p class="user-sidebar__subtitle m-0">Konuya göre filtrele</p>
   </div>
 
   <!-- Category nav -->
-  <nav class="flex-grow-1 d-flex flex-column gap-1 px-2" aria-label="Filter by category">
+  <nav class="flex-grow-1 d-flex flex-column gap-1 px-2" aria-label="Kategoriye göre filtrele">
     <button
       type="button"
       class="user-sidebar__link d-flex align-items-center gap-3"
@@ -14,7 +14,7 @@
       (click)="select(null)"
     >
       <span class="material-symbols-outlined" aria-hidden="true">list</span>
-      All Posts
+      Tüm Yazılar
     </button>
 
     @for (cat of categories(); track cat.id) {
@@ -32,6 +32,6 @@
 
   <!-- Subscribe CTA -->
   <div class="px-3 pt-3 mt-auto" style="border-top: 1px solid var(--md-outline-variant);">
-    <button type="button" class="user-sidebar__subscribe w-100">Subscribe</button>
+    <button type="button" class="user-sidebar__subscribe w-100">Abone Ol</button>
   </div>
 </aside>

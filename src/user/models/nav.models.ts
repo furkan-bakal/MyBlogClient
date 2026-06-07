@@ -10,14 +10,14 @@ export interface UserNavItem {
 
 /** Primary user navigation, in display order. */
 export const USER_NAV_ITEMS: readonly UserNavItem[] = [
-  { path: '/home', icon: 'home', label: 'Home' },
-  { path: '/feed', icon: 'explore', label: 'Feed' },
-  { path: '/about', icon: 'person', label: 'Resume' },
+  { path: '/home', icon: 'home', label: 'Ana Sayfa' },
+  { path: '/feed', icon: 'explore', label: 'Akış' },
+  { path: '/about', icon: 'person', label: 'Özgeçmiş' },
 ];
 
 /** Mobile bottom navigation items. */
 export const USER_BOTTOM_NAV_ITEMS: readonly UserNavItem[] = [
-  { path: '/home', icon: 'home', label: 'Home' },
-  { path: '/feed', icon: 'explore', label: 'Explore' },
-  { path: '/about', icon: 'person', label: 'Profile' },
+  { path: '/home', icon: 'home', label: 'Ana Sayfa' },
+  { path: '/feed', icon: 'explore', label: 'Keşfet' },
+  { path: '/about', icon: 'person', label: 'Profil' },
 ];

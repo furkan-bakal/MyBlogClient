@@ -23,6 +23,15 @@ export class ArticleService {
     return this.http.get<ResponseModel<Article[]>>(`${this.baseUrl}/getpaginate`, { params });
   }
 
+  /**
+   * Full-text search across article title and content. Matching is performed on the backend;
+   * results are paginated like {@link getPaginated}.
+   */
+  search(query: string, take: number, skip: number): Observable<ResponseModel<Article[]>> {
+    const params = new HttpParams().set('query', query).set('take', take).set('skip', skip);
+    return this.http.get<ResponseModel<Article[]>>(`${this.baseUrl}/search`, { params });
+  }
+
   create(article: CreateArticleDto): Observable<ResponseModel<string>> {
     return this.http.post<ResponseModel<string>>(this.baseUrl, article);
   }

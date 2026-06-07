@@ -13,6 +13,7 @@ import { Category } from '../../category/models/category.model';
 import { CategoryService } from '../../category/services/category.service';
 import { Popup } from '../../shared/popup/popup';
 import { ApiDatePipe } from '../../shared/pipes/api-date.pipe';
+import { Spinner } from '../../shared/spinner/spinner';
 
 type ListState =
   | { readonly status: 'loading' }
@@ -24,7 +25,7 @@ type ListState =
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './category-list.html',
   styleUrl: '../article-list/article-list.css',
-  imports: [Popup, ApiDatePipe, RouterLink],
+  imports: [Popup, ApiDatePipe, RouterLink, Spinner],
 })
 export class CategoryList {
   private readonly categoryService = inject(CategoryService);

@@ -7,6 +7,12 @@
   z-index: 1030;
 }
 
+/* Same max-width as .admin-shell__canvas so header content lines up 1:1 with the page. */
+.admin-header__canvas {
+  width: 100%;
+  max-width: 1280px;
+}
+
 .admin-header__brand {
   font-size: 1.25rem;
   font-weight: 700;

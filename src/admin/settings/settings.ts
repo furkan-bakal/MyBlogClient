@@ -12,6 +12,8 @@ import {
   ValidationErrors,
   Validators,
 } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AuthService } from '../../auth/services/auth.service';
 import { Preferences, PublicationDetails, UserProfile } from '../models/settings.models';
 
 /**
@@ -33,6 +35,8 @@ import { Preferences, PublicationDetails, UserProfile } from '../models/settings
 })
 export class Settings {
   private readonly fb = inject(FormBuilder);
+  private readonly auth = inject(AuthService);
+  private readonly router = inject(Router);
 
   // ---------------------------------------------------------------------------
   // UI state
@@ -170,8 +174,8 @@ export class Settings {
   }
 
   protected logout(): void {
-    // TODO: call AuthService.logout()
-    console.warn('Logout not yet wired to AuthService.');
+    this.auth.signOut();
+    void this.router.navigate(['/admin/login']);
   }
 
   // ---------------------------------------------------------------------------

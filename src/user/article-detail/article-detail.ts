@@ -17,6 +17,7 @@ import { DecimalPipe, UpperCasePipe } from '@angular/common';
 import { ApiDatePipe } from '../../shared/pipes/api-date.pipe';
 import { UserSidebar } from '../components/sidebar/user-sidebar';
 import { CommentItem, Comment } from '../components/comment-item/comment-item';
+import { Spinner } from '../../shared/spinner/spinner';
 
 type ArticleState =
   | { readonly status: 'loading' }
@@ -28,7 +29,15 @@ type ArticleState =
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './article-detail.html',
   styleUrl: './article-detail.css',
-  imports: [ReactiveFormsModule, ApiDatePipe, UserSidebar, CommentItem, DecimalPipe, UpperCasePipe],
+  imports: [
+    ReactiveFormsModule,
+    ApiDatePipe,
+    UserSidebar,
+    CommentItem,
+    DecimalPipe,
+    UpperCasePipe,
+    Spinner,
+  ],
 })
 export class ArticleDetail {
   private readonly route = inject(ActivatedRoute);

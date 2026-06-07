@@ -1,12 +1,14 @@
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
-import { catchError, delay, map, of, startWith } from 'rxjs';
+import { toObservable, toSignal } from '@angular/core/rxjs-interop';
+import { ActivatedRoute } from '@angular/router';
+import { catchError, map, of, startWith, switchMap } from 'rxjs';
 import { ArticleService } from '../../article/services/article.service';
 import { CategoryService } from '../../category/services/category.service';
 import { Article } from '../../article/models/article.model';
 import { Category } from '../../category/models/category.model';
 import { ArticleCard } from '../components/article-card/article-card';
 import { UserSidebar } from '../components/sidebar/user-sidebar';
+import { Spinner } from '../../shared/spinner/spinner';
 
 type PageState =
   | { readonly status: 'loading' }
@@ -24,14 +26,21 @@ const PAGE_SIZE = 10;
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './home.html',
   styleUrl: './home.css',
-  imports: [ArticleCard, UserSidebar],
+  imports: [ArticleCard, UserSidebar, Spinner],
 })
 export class Home {
   private readonly articleService = inject(ArticleService);
   private readonly categoryService = inject(CategoryService);
+  private readonly route = inject(ActivatedRoute);
 
   protected readonly activeCategoryId = signal<string | null>(null);
   protected readonly viewMode = signal<'grid' | 'list'>('grid');
+
+  /** Active search term, mirrored from the `q` query param set by the header search box. */
+  protected readonly searchQuery = toSignal(
+    this.route.queryParamMap.pipe(map((params) => params.get('q')?.trim() ?? '')),
+    { initialValue: '' },
+  );
 
   private readonly categoriesState = toSignal(
     this.categoryService.getAll().pipe(
@@ -48,12 +57,17 @@ export class Home {
   });
 
   private readonly articlesState = toSignal(
-    this.articleService.getPaginated(PAGE_SIZE, 0).pipe(
-      // TODO: spinner'ı test etmek için geçici gecikme — kaldırılacak.
-      delay(3000),
-      map((res) => ({ status: 'loaded', articles: res.data ?? [] }) as PageState),
-      catchError(() => of({ status: 'error' } as PageState)),
-      startWith({ status: 'loading' } as PageState),
+    toObservable(this.searchQuery).pipe(
+      switchMap((query) => {
+        const request = query
+          ? this.articleService.search(query, PAGE_SIZE, 0)
+          : this.articleService.getPaginated(PAGE_SIZE, 0);
+        return request.pipe(
+          map((res) => ({ status: 'loaded', articles: res.data ?? [] }) as PageState),
+          catchError(() => of({ status: 'error' } as PageState)),
+          startWith({ status: 'loading' } as PageState),
+        );
+      }),
     ),
     { initialValue: { status: 'loading' } as PageState },
   );

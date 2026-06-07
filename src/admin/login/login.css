@@ -1,0 +1,53 @@
+.login {
+  min-height: 100vh;
+  background-color: var(--md-background);
+}
+
+.login__card {
+  width: 100%;
+  max-width: 26rem;
+  padding: 2rem;
+  background-color: var(--md-surface);
+  border: 1px solid var(--md-outline-variant);
+  border-radius: var(--md-radius-lg, 1rem);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+}
+
+.login__logo {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  background-color: var(--md-primary);
+  color: var(--md-on-primary);
+}
+
+.login__logo .material-symbols-outlined {
+  font-size: 24px;
+}
+
+.login__title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--md-on-surface);
+}
+
+.login__subtitle {
+  margin-top: 0.25rem;
+  font-size: 0.875rem;
+  color: var(--md-on-surface-variant);
+}
+
+.login__label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--md-on-surface);
+}
+
+.login__error {
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+  border-radius: var(--md-radius-md, 0.5rem);
+  background-color: color-mix(in srgb, var(--md-error) 12%, transparent);
+  color: var(--md-error);
+  font-size: 0.875rem;
+}

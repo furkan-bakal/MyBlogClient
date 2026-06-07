@@ -1,32 +1,39 @@
-<header class="admin-header d-flex justify-content-between align-items-center px-3 px-md-4">
-  <!-- Mobile brand (hidden on md+) -->
-  <h1 class="admin-header__brand d-md-none m-0">Editor Console</h1>
+<header class="admin-header">
+  <!-- Padding + max-width canvas mirror .admin-shell__main / .admin-shell__canvas exactly -->
+  <div class="admin-header__pad px-3 px-md-4 h-100">
+    <div
+      class="admin-header__canvas mx-auto h-100 d-flex justify-content-between align-items-center"
+    >
+      <!-- Mobile brand (hidden on md+) -->
+      <h1 class="admin-header__brand d-md-none m-0">Editör Konsolu</h1>
 
-  <!-- Search (md+) -->
-  <div class="admin-header__search d-none d-md-flex align-items-center">
-    <span class="material-symbols-outlined" aria-hidden="true">search</span>
-    <input
-      type="text"
-      class="admin-header__search-input"
-      placeholder="Search modern editorial..."
-      aria-label="Search"
-    />
-  </div>
+      <!-- Search (md+) -->
+      <div class="admin-header__search d-none d-md-flex align-items-center">
+        <span class="material-symbols-outlined" aria-hidden="true">search</span>
+        <input
+          type="text"
+          class="admin-header__search-input"
+          placeholder="Aramada modern editör..."
+          aria-label="Ara"
+        />
+      </div>
 
-  <!-- Centered brand (lg+) -->
-  <div class="admin-header__title d-none d-lg-block ms-auto me-4">Modern Editorial</div>
+      <!-- Centered brand (lg+) -->
+      <div class="admin-header__title d-none d-lg-block ms-auto me-4">Furkan Bakal</div>
 
-  <!-- Trailing actions -->
-  <div class="d-flex align-items-center gap-2 ms-auto ms-lg-0">
-    <button type="button" class="admin-header__icon position-relative" aria-label="Notifications">
-      <span class="material-symbols-outlined" aria-hidden="true">notifications</span>
-      <span class="admin-header__badge" aria-hidden="true"></span>
-    </button>
-    <button type="button" class="admin-header__icon" aria-label="Help">
-      <span class="material-symbols-outlined" aria-hidden="true">help_outline</span>
-    </button>
-    <span class="admin-header__avatar d-inline-flex align-items-center justify-content-center" aria-label="User avatar" role="img">
-      AC
-    </span>
+      <!-- Trailing actions -->
+      <div class="d-flex align-items-center gap-2 ms-auto ms-lg-0">
+        <button type="button" class="admin-header__icon position-relative" aria-label="Bildirimler">
+          <span class="material-symbols-outlined" aria-hidden="true">notifications</span>
+          <span class="admin-header__badge" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="admin-header__icon" aria-label="Yardım">
+          <span class="material-symbols-outlined" aria-hidden="true">help_outline</span>
+        </button>
+        <span class="admin-header__avatar d-inline-flex align-items-center justify-content-center" aria-label="Kullanıcı avatarı" role="img">
+          AC
+        </span>
+      </div>
+    </div>
   </div>
 </header>

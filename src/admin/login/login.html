@@ -1,0 +1,58 @@
+<div class="login d-flex align-items-center justify-content-center px-3 py-5">
+  <div class="login__card">
+    <!-- Brand -->
+    <div class="login__brand text-center mb-4">
+      <span class="login__logo d-inline-flex align-items-center justify-content-center mb-3" aria-hidden="true">
+        <span class="material-symbols-outlined">lock</span>
+      </span>
+      <h1 class="login__title m-0">Yönetim Paneli</h1>
+      <p class="login__subtitle m-0">Devam etmek için giriş yapın</p>
+    </div>
+
+    @if (errorMessage(); as message) {
+      <p class="login__error" role="alert">{{ message }}</p>
+    }
+
+    <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+      <div class="mb-3">
+        <label class="form-label login__label" for="login-email">E-posta</label>
+        <input
+          id="login-email"
+          type="email"
+          class="form-control md-input"
+          [class.is-invalid]="form.controls.email.touched && form.controls.email.invalid"
+          formControlName="email"
+          autocomplete="email"
+          placeholder="ornek@eposta.com"
+        />
+        @if (form.controls.email.touched && form.controls.email.invalid) {
+          <div class="invalid-feedback d-block">Geçerli bir e-posta adresi girin.</div>
+        }
+      </div>
+
+      <div class="mb-4">
+        <label class="form-label login__label" for="login-password">Şifre</label>
+        <input
+          id="login-password"
+          type="password"
+          class="form-control md-input"
+          [class.is-invalid]="form.controls.password.touched && form.controls.password.invalid"
+          formControlName="password"
+          autocomplete="current-password"
+          placeholder="••••••••"
+        />
+        @if (form.controls.password.touched && form.controls.password.invalid) {
+          <div class="invalid-feedback d-block">Şifre zorunludur.</div>
+        }
+      </div>
+
+      <button
+        type="submit"
+        class="btn btn-primary-md rounded-pill w-100 py-2"
+        [disabled]="submitting()"
+      >
+        {{ submitting() ? 'Giriş yapılıyor…' : 'Giriş Yap' }}
+      </button>
+    </form>
+  </div>
+</div>

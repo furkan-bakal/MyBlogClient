@@ -9,7 +9,7 @@ import { USER_BOTTOM_NAV_ITEMS } from '../../models/nav.models';
   template: `
     <nav
       class="user-bottom-nav d-flex d-md-none justify-content-around align-items-center"
-      aria-label="Mobile navigation"
+      aria-label="Mobil menü"
     >
       @for (item of navItems; track item.path) {
         <a

@@ -12,10 +12,17 @@
     <!-- Page header -->
     <div class="d-flex align-items-start justify-content-between mb-4 flex-wrap gap-2">
       <div>
-        <h1 class="home-page__title m-0">Recent Articles</h1>
-        <p class="home-page__subtitle mt-1 mb-0">
-          Expert insights and deep dives into the modern creative industry.
-        </p>
+        @if (searchQuery(); as query) {
+          <h1 class="home-page__title m-0">"{{ query }}" için sonuçlar</h1>
+          <p class="home-page__subtitle mt-1 mb-0">
+            Başlık ve içerikte aramanızla eşleşen yazılar.
+          </p>
+        } @else {
+          <h1 class="home-page__title m-0">Son Yazılar</h1>
+          <p class="home-page__subtitle mt-1 mb-0">
+            Modern yaratıcı endüstrisine dair uzman görüşleri ve derinlemesine incelemeler.
+          </p>
+        }
       </div>
       <!-- View mode toggle -->
       <div class="home-page__view-toggle d-none d-sm-flex align-items-center gap-1">
@@ -24,7 +31,7 @@
           class="home-page__view-btn"
           [class.home-page__view-btn--active]="viewMode() === 'grid'"
           (click)="setViewMode('grid')"
-          aria-label="Grid view"
+          aria-label="Izgara görünümü"
         >
           <span class="material-symbols-outlined" aria-hidden="true">grid_view</span>
         </button>
@@ -33,22 +40,15 @@
           class="home-page__view-btn"
           [class.home-page__view-btn--active]="viewMode() === 'list'"
           (click)="setViewMode('list')"
-          aria-label="List view"
+          aria-label="Liste görünümü"
         >
           <span class="material-symbols-outlined" aria-hidden="true">view_agenda</span>
         </button>
       </div>
     </div>
 
-    <!-- Loading state -->
-    @if (status() === 'loading') {
-      <div class="home-page__state d-flex flex-column align-items-center justify-content-center py-5 gap-3">
-        <div class="spinner-border text-primary" role="status">
-          <span class="visually-hidden">Loading articles...</span>
-        </div>
-        <p class="home-page__state-text m-0">Loading articles...</p>
-      </div>
-    }
+    <!-- Loading state (driven by the global loading interceptor) -->
+    <app-spinner />
 
     <!-- Error state -->
     @if (status() === 'error') {
@@ -57,7 +57,7 @@
         role="alert"
       >
         <span class="material-symbols-outlined home-page__state-icon" aria-hidden="true">error_outline</span>
-        <p class="home-page__state-text m-0">Could not load articles. Please try again later.</p>
+        <p class="home-page__state-text m-0">Yazılar yüklenemedi. Lütfen daha sonra tekrar deneyin.</p>
       </div>
     }
 
@@ -65,7 +65,11 @@
     @if (status() === 'loaded' && articles().length === 0) {
       <div class="home-page__state d-flex flex-column align-items-center justify-content-center py-5 gap-3">
         <span class="material-symbols-outlined home-page__state-icon" aria-hidden="true">inbox</span>
-        <p class="home-page__state-text m-0">No articles found in this category.</p>
+        @if (searchQuery()) {
+          <p class="home-page__state-text m-0">"{{ searchQuery() }}" ile eşleşen yazı bulunamadı.</p>
+        } @else {
+          <p class="home-page__state-text m-0">Bu kategoride yazı bulunamadı.</p>
+        }
       </div>
     }
 
@@ -97,25 +101,25 @@
       <!-- Newsletter CTA -->
       <div class="home-page__newsletter mt-5 p-4 p-md-5">
         <div class="home-page__newsletter-inner">
-          <h2 class="home-page__newsletter-title mb-2">Stay ahead of the curve.</h2>
+          <h2 class="home-page__newsletter-title mb-2">Gelişmelerin önünde olun.</h2>
           <p class="home-page__newsletter-body mb-4">
-            Join 15,000+ editors receiving our weekly briefing on the intersection of technology and
-            editorial design.
+            Teknoloji ve editör tasarımının kesişimine dair haftalık bültenimizi alan 15.000+ editöre
+            katılın.
           </p>
           <form
             class="d-flex flex-column flex-sm-row gap-2"
             (submit)="$event.preventDefault()"
-            aria-label="Newsletter signup"
+            aria-label="Bülten kaydı"
           >
-            <label for="newsletter-email" class="visually-hidden">Email address</label>
+            <label for="newsletter-email" class="visually-hidden">E-posta adresi</label>
             <input
               id="newsletter-email"
               type="email"
               class="home-page__newsletter-input flex-grow-1"
-              placeholder="Enter your email"
+              placeholder="E-postanızı girin"
               autocomplete="email"
             />
-            <button type="submit" class="home-page__newsletter-btn">Join Now</button>
+            <button type="submit" class="home-page__newsletter-btn">Hemen Katıl</button>
           </form>
         </div>
       </div>

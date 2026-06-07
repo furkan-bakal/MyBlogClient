@@ -1,9 +1,15 @@
 import { Routes } from '@angular/router';
+import { adminAuthGuard } from '../auth/guards/admin-auth.guard';
 
 export const ADMIN_ROUTES: Routes = [
   {
+    path: 'login',
+    loadComponent: () => import('./login/login').then((m) => m.Login),
+  },
+  {
     path: '',
     loadComponent: () => import('./layout/layout').then((m) => m.Layout),
+    canActivate: [adminAuthGuard],
     children: [
       {
         path: '',
@@ -23,11 +29,20 @@ export const ADMIN_ROUTES: Routes = [
         loadComponent: () => import('./article-editor/article-editor').then((m) => m.ArticleEditor),
       },
       {
+        path: 'articles/:id/edit',
+        loadComponent: () => import('./article-editor/article-editor').then((m) => m.ArticleEditor),
+      },
+      {
         path: 'categories',
         loadComponent: () => import('./category-list/category-list').then((m) => m.CategoryList),
       },
       {
         path: 'categories/new',
+        loadComponent: () =>
+          import('./category-editor/category-editor').then((m) => m.CategoryEditor),
+      },
+      {
+        path: 'categories/:id/edit',
         loadComponent: () =>
           import('./category-editor/category-editor').then((m) => m.CategoryEditor),
       },

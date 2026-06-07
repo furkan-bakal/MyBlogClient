@@ -2,8 +2,9 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { LoadingService } from '../../core/loading/loading.service';
 
 /**
- * Full-screen overlay spinner shown whenever at least one HTTP request is in flight.
- * Reads its visibility from the signal-based LoadingService.
+ * Inline content spinner shown whenever at least one HTTP request is in flight.
+ * Drop `<app-spinner />` into a page's content area to render the global loading state
+ * in place. Reads its visibility from the signal-based LoadingService.
  */
 @Component({
   selector: 'app-spinner',

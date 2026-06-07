@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { catchError, of } from 'rxjs';
 import { ArticleService } from '../../article/services/article.service';
 import { CategoryService } from '../../category/services/category.service';
@@ -16,8 +16,10 @@ import { Category } from '../../category/models/category.model';
 import { CreateArticleDto } from '../../article/models/article.model';
 
 /**
- * New Post editor: title + content with a visual formatting toolbar, plus a
- * publish-settings panel (categories, tags, author). Persists via ArticleService.
+ * Post editor used for both creating a new post (`articles/new`) and editing an
+ * existing one (`articles/:id/edit`). Title + content with a visual formatting
+ * toolbar, plus a publish-settings panel (categories, tags, author). The presence
+ * of an `id` route param switches the component into edit mode. Persists via ArticleService.
  */
 @Component({
   selector: 'app-article-editor',
@@ -31,7 +33,12 @@ export class ArticleEditor {
   private readonly articleService = inject(ArticleService);
   private readonly categoryService = inject(CategoryService);
   private readonly router = inject(Router);
+  private readonly route = inject(ActivatedRoute);
   private readonly destroyRef = inject(DestroyRef);
+
+  /** Set when editing an existing post; null when creating a new one. */
+  private readonly articleId = this.route.snapshot.paramMap.get('id');
+  protected readonly isEditMode = this.articleId !== null;
 
   protected readonly form = this.fb.nonNullable.group({
     title: ['', Validators.required],
@@ -78,6 +85,28 @@ export class ArticleEditor {
         const words = value.trim().split(/\s+/).filter(Boolean);
         this.wordCount.set(words.length);
       });
+
+    if (this.articleId) {
+      this.articleService
+        .getById(this.articleId)
+        .pipe(
+          catchError(() => of(null)),
+          takeUntilDestroyed(this.destroyRef),
+        )
+        .subscribe((response) => {
+          const article = response?.data;
+          if (article) {
+            this.form.patchValue({
+              title: article.title,
+              content: article.content,
+              author: article.author,
+              categoryId: article.categoryId,
+            });
+          } else {
+            this.errorMessage.set('Yazı yüklenemedi.');
+          }
+        });
+    }
   }
 
   protected readonly selectedCategoryId = computed(() => this.form.controls.categoryId.value);
@@ -114,18 +143,20 @@ export class ArticleEditor {
 
     this.submitting.set(true);
     this.errorMessage.set(null);
-    this.articleService
-      .create(dto)
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe({
-        next: () => {
-          this.submitting.set(false);
-          void this.router.navigate(['/admin/articles']);
-        },
-        error: () => {
-          this.submitting.set(false);
-          this.errorMessage.set('The post could not be saved. Please try again.');
-        },
-      });
+
+    const request$ = this.articleId
+      ? this.articleService.update(this.articleId, dto)
+      : this.articleService.create(dto);
+
+    request$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
+      next: () => {
+        this.submitting.set(false);
+        void this.router.navigate(['/admin/articles']);
+      },
+      error: () => {
+        this.submitting.set(false);
+        this.errorMessage.set('Yazı kaydedilemedi. Lütfen tekrar deneyin.');
+      },
+    });
   }
 }

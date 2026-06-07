@@ -1,16 +1,16 @@
 <form class="editor" [formGroup]="form" (ngSubmit)="save()">
   <!-- Action bar -->
   <div class="editor__bar d-flex align-items-center gap-2 gap-md-3 mb-3 mb-md-4">
-    <a routerLink="/admin/categories" class="btn btn-icon d-lg-none" aria-label="Back to categories">
+    <a routerLink="/admin/categories" class="btn btn-icon d-lg-none" aria-label="Kategorilere dön">
       <span class="material-symbols-outlined" aria-hidden="true">arrow_back</span>
     </a>
-    <span class="editor__bar-title d-lg-none">New Category</span>
-    <span class="editor__focus d-none d-lg-inline-flex align-items-center gap-2">New Category</span>
+    <span class="editor__bar-title d-lg-none">{{ isEditMode ? 'Kategoriyi Düzenle' : 'Yeni Kategori' }}</span>
+    <span class="editor__focus d-none d-lg-inline-flex align-items-center gap-2">{{ isEditMode ? 'Kategoriyi Düzenle' : 'Yeni Kategori' }}</span>
 
     <div class="d-flex align-items-center gap-2 ms-auto">
-      <a routerLink="/admin/categories" class="btn btn-ghost rounded-pill px-3">Cancel</a>
+      <a routerLink="/admin/categories" class="btn btn-ghost rounded-pill px-3">İptal</a>
       <button type="submit" class="btn btn-primary-md rounded-pill px-3" [disabled]="submitting()">
-        {{ submitting() ? 'Saving…' : 'Save' }}
+        {{ submitting() ? 'Kaydediliyor…' : 'Kaydet' }}
       </button>
     </div>
   </div>
@@ -25,12 +25,12 @@
         <input
           type="text"
           class="editor__title"
-          placeholder="Category name..."
+          placeholder="Kategori adı..."
           formControlName="name"
-          aria-label="Category name"
+          aria-label="Kategori adı"
         />
         @if (form.controls.name.touched && form.controls.name.invalid) {
-          <p class="editor__field-error" role="alert">A name is required.</p>
+          <p class="editor__field-error" role="alert">Ad zorunludur.</p>
         }
       </div>
     </div>

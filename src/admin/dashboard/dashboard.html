@@ -4,14 +4,14 @@
     class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-end gap-3 mb-4"
   >
     <div>
-      <h1 class="dashboard__title mb-1">Dashboard Overview</h1>
-      <p class="dashboard__subtitle m-0">Here's what's happening with your content today.</p>
+      <h1 class="dashboard__title mb-1">Panel Özeti</h1>
+      <p class="dashboard__subtitle m-0">İçeriğinizle bugün neler olduğu burada.</p>
     </div>
     <div class="d-flex flex-wrap gap-2">
-      <button type="button" class="btn btn-ghost rounded-pill px-3">Export Data</button>
+      <button type="button" class="btn btn-ghost rounded-pill px-3">Verileri Dışa Aktar</button>
       <a routerLink="/admin/articles/new" class="btn btn-primary-md rounded-pill px-3 d-inline-flex align-items-center gap-1">
         <span class="material-symbols-outlined" aria-hidden="true">add</span>
-        Create Post
+        Yazı Oluştur
       </a>
     </div>
   </div>
@@ -34,44 +34,44 @@
   <!-- Quick Draft (8 cols) + Recent Activity (4 cols) on desktop -->
   <div class="row g-3">
     <div class="col-12 col-lg-8">
-      <app-panel-card title="Quick Draft" icon="edit_note">
+      <app-panel-card title="Hızlı Taslak" icon="edit_note">
         <form [formGroup]="draftForm" (ngSubmit)="saveDraft()" class="d-flex flex-column h-100">
-          <label class="visually-hidden" for="draft-title">Post title</label>
+          <label class="visually-hidden" for="draft-title">Yazı başlığı</label>
           <input
             id="draft-title"
             type="text"
             class="md-input form-control mb-3"
-            placeholder="Enter post title..."
+            placeholder="Yazı başlığını girin..."
             formControlName="title"
           />
 
-          <label class="visually-hidden" for="draft-content">Post content</label>
+          <label class="visually-hidden" for="draft-content">Yazı içeriği</label>
           <textarea
             id="draft-content"
             class="md-input form-control flex-grow-1 mb-3"
             rows="6"
-            placeholder="What's the main idea?"
+            placeholder="Ana fikir nedir?"
             formControlName="content"
           ></textarea>
 
           <div class="d-flex justify-content-between align-items-center pt-3 dashboard__draft-actions">
             <div class="d-flex gap-1">
-              <button type="button" class="btn btn-icon" aria-label="Add image">
+              <button type="button" class="btn btn-icon" aria-label="Görsel ekle">
                 <span class="material-symbols-outlined" aria-hidden="true">image</span>
               </button>
-              <button type="button" class="btn btn-icon" aria-label="Attach file">
+              <button type="button" class="btn btn-icon" aria-label="Dosya ekle">
                 <span class="material-symbols-outlined" aria-hidden="true">attach_file</span>
               </button>
             </div>
-            <button type="submit" class="btn btn-tonal rounded-pill px-3">Save as Draft</button>
+            <button type="submit" class="btn btn-tonal rounded-pill px-3">Taslak Olarak Kaydet</button>
           </div>
         </form>
       </app-panel-card>
     </div>
 
     <div class="col-12 col-lg-4">
-      <app-panel-card title="Recent Activity">
-        <button slot="action" type="button" class="btn btn-link p-0 dashboard__view-all">View All</button>
+      <app-panel-card title="Son Etkinlikler">
+        <button slot="action" type="button" class="btn btn-link p-0 dashboard__view-all">Tümünü Gör</button>
         <div class="d-flex flex-column gap-4">
           @for (item of activity(); track item.text) {
             <app-activity-item

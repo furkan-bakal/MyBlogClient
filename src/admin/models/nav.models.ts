@@ -10,9 +10,9 @@ export interface NavItem {
 
 /** Primary admin navigation, in display order. */
 export const ADMIN_NAV_ITEMS: readonly NavItem[] = [
-  { path: '/admin/dashboard', icon: 'dashboard', label: 'Dashboard' },
-  { path: '/admin/articles', icon: 'article', label: 'Posts' },
-  { path: '/admin/categories', icon: 'category', label: 'Categories' },
-  { path: '/admin/analytics', icon: 'monitoring', label: 'Analytics' },
-  { path: '/admin/settings', icon: 'settings', label: 'Settings' },
+  { path: '/admin/dashboard', icon: 'dashboard', label: 'Panel' },
+  { path: '/admin/articles', icon: 'article', label: 'Yazılar' },
+  { path: '/admin/categories', icon: 'category', label: 'Kategoriler' },
+  { path: '/admin/analytics', icon: 'monitoring', label: 'Analizler' },
+  { path: '/admin/settings', icon: 'settings', label: 'Ayarlar' },
 ];

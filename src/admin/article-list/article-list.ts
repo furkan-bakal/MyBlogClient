@@ -13,6 +13,7 @@ import { catchError, map, of, startWith, switchMap } from 'rxjs';
 import { Article } from '../../article/models/article.model';
 import { ArticleService } from '../../article/services/article.service';
 import { Popup } from '../../shared/popup/popup';
+import { Spinner } from '../../shared/spinner/spinner';
 
 type ListState =
   | { readonly status: 'loading' }
@@ -26,7 +27,7 @@ const PAGE_SIZE = 10;
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './article-list.html',
   styleUrl: './article-list.css',
-  imports: [Popup, ApiDatePipe, RouterLink],
+  imports: [Popup, ApiDatePipe, RouterLink, Spinner],
 })
 export class ArticleList {
   private readonly articleService = inject(ArticleService);
