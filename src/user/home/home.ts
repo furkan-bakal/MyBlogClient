@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { catchError, map, of, startWith } from 'rxjs';
+import { catchError, delay, map, of, startWith } from 'rxjs';
 import { ArticleService } from '../../article/services/article.service';
 import { CategoryService } from '../../category/services/category.service';
 import { Article } from '../../article/models/article.model';
@@ -49,6 +49,8 @@ export class Home {
 
   private readonly articlesState = toSignal(
     this.articleService.getPaginated(PAGE_SIZE, 0).pipe(
+      // TODO: spinner'ı test etmek için geçici gecikme — kaldırılacak.
+      delay(3000),
       map((res) => ({ status: 'loaded', articles: res.data ?? [] }) as PageState),
       catchError(() => of({ status: 'error' } as PageState)),
       startWith({ status: 'loading' } as PageState),
